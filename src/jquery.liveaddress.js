@@ -233,6 +233,208 @@
 	};
 
 
+	/*
+		* ADDRESS FORMATTING (ADDED BY BRANDON CARL)
+	*/
+	var Formatter = {}
+
+  Formatter.stateArray = [['ALABAMA','AL'],['ALASKA','AK'],['AMERICAN SAMOA','AS'],['ARIZONA','AZ'],['ARKANSAS','AR'],
+    ['CALIFORNIA','CA'],['COLORADO','CO'],['CONNECTICUT','CT'],['DELAWARE','DE'],['DISTRICT OF COLUMBIA','DC'],
+    ['FEDERATED STATES OF MICRONESIA','FM'],['FLORIDA','FL'],['GEORGIA','GA'],['GUAM','GU'],['HAWAII','HI'],
+    ['IDAHO','ID'],['ILLINOIS','IL'],['INDIANA','IN'],['IOWA','IA'],['KANSAS','KS'],['KENTUCKY','KY'],['LOUISIANA','LA'],
+    ['MAINE','ME'],['MARSHALL ISLANDS','MH'],['MARYLAND','MD'],['MASSACHUSETTS','MA'],['MICHIGAN','MI'],['MINNESOTA','MN'],
+    ['MISSISSIPPI','MS'],['MISSOURI','MO'],['MONTANA','MT'],['NEBRASKA','NE'],['NEVADA','NV'],['NEW HAMPSHIRE','NH'],['NEW JERSEY','NJ'],
+    ['NEW MEXICO','NM'],['NEW YORK','NY'],['NORTH CAROLINA','NC'],['NORTH DAKOTA','ND'],['NORTHERN MARIANA ISLANDS','MP'],
+    ['OHIO','OH'],['OKLAHOMA','OK'],['OREGON','OR'],['PALAU','PW'],['PENNSYLVANIA','PA'],['PUERTO RICO','PR'],['RHODE ISLAND','RI'],
+    ['SOUTH CAROLINA','SC'],['SOUTH DAKOTA','SD'],['TENNESSEE','TN'],['TEXAS','TX'],['UTAH','UT'],['VERMONT','VT'],['VIRGIN ISLANDS','VI'],
+    ['VIRGINIA','VA'],['WASHINGTON','WA'],['WEST VIRGINIA','WV'],['WISCONSIN','WI'],['WYOMING','WY'],['Armed Forces Africa','AE'],
+    ['Armed Forces Americas','AA'],['Armed Forces Canada','AE'],['Armed Forces Europe','AE'],['Armed Forces Middle East','AE'],
+    ['Armed Forces Pacific','AP']];
+
+  Formatter.unitArray = [['APARTMENT','APT'],['BASEMENT','BSMT'],['BUILDING','BLDG'],['DEPARTMENT','DEPT'],['FLOOR','FL'],
+    ['FRONT','FRNT'],['HANGAR','HNGR'],['LOBBY','LBBY'],['LOT','LOT'],['LOWER','LOWR'],['OFFICE','OFC'],['PENTHOUSE','PH'],
+    ['PIER','PIER'],['REAR','REAR'],['ROOM','RM'],['SIDE','SIDE'],['SLIP','SLIP'],['SPACE','SPC'],['STOP','STOP'],['SUITE','STE'],
+    ['TRAILER','TRLR'],['UNIT','UNIT'],['UPPER','UPPR']];
+
+  Formatter.streetArray = [['ALLEY','ALY'],['ANNEX','ANX'],['ARCADE','ARC'],['AVENUE','AVE'],['BAYOO','BYU'],['BEACH','BCH'],
+    ['BEND','BND'],['BLUFF','BLF'],['BLUFFS','BLFS'],['BOTTOM','BTM'],['BOULEVARD','BLVD'],['BRANCH','BR'],['BRIDGE','BRG'],
+    ['BROOK','BRK'],['BROOKS','BRKS'],['BURG','BG'],['BURGS','BGS'],['BYPASS','BYP'],['CAMP','CP'],['CANYON','CYN'],['CAPE','CPE'],
+    ['CAUSEWAY','CSWY'],['CENTER','CTR'],['CENTERS','CTRS'],['CIRCLE','CIR'],['CIRCLES','CIRS'],['CLIFF','CLF'],['CLIFFS','CLFS'],
+    ['CLUB','CLB'],['COMMON','CMN'],['CORNER','COR'],['CORNERS','CORS'],['COURSE','CRSE'],['COURT','CT'],['COURTS','CTS'],['COVE','CV'],
+    ['COVES','CVS'],['CREEK','CRK'],['CRESCENT','CRES'],['CREST','CRST'],['CROSSING','XING'],['CROSSROAD','XRD'],['CURVE','CURV'],
+    ['DALE','DL'],['DAM','DM'],['DIVIDE','DV'],['DRIVE','DR'],['DRIVES','DRS'],['ESTATE','EST'],['ESTATES','ESTS'],['EXPRESSWAY','EXPY'],
+    ['EXTENSION','EXT'],['EXTENSIONS','EXTS'],['FALL','FALL'],['FALLS','FLS'],['FERRY','FRY'],['FIELD','FLD'],['FIELDS','FLDS'],
+    ['FLAT','FLT'],['FLATS','FLTS'],['FORD','FRD'],['FORDS','FRDS'],['FOREST','FRST'],['FORGE','FRG'],['FORGES','FRGS'],['FORK','FRK'],
+    ['FORKS','FRKS'],['FORT','FT'],['FREEWAY','FWY'],['GARDEN','GDN'],['GARDENS','GDNS'],['GATEWAY','GTWY'],['GLEN','GLN'],
+    ['GLENS','GLNS'],['GREEN','GRN'],['GREENS','GRNS'],['GROVE','GRV'],['GROVES','GRVS'],['HARBOR','HBR'],['HARBORS','HBRS'],
+    ['HAVEN','HVN'],['HEIGHTS','HTS'],['HIGHWAY','HWY'],['HILL','HL'],['HILLS','HLS'],['HOLLOW','HOLW'],['INLET','INLT'],
+    ['ISLAND','IS'],['ISLANDS','ISS'],['ISLE','ISLE'],['JUNCTION','JCT'],['JUNCTIONS','JCTS'],['KEY','KY'],['KEYS','KYS'],
+    ['KNOLL','KNL'],['KNOLLS','KNLS'],['LAKE','LK'],['LAKES','LKS'],['LAND','LAND'],['LANDING','LNDG'],['LANE','LN'],['LIGHT','LGT'],
+    ['LIGHTS','LGTS'],['LOAF','LF'],['LOCK','LCK'],['LOCKS','LCKS'],['LODGE','LDG'],['LOOP','LOOP'],['MALL','MALL'],['MANOR','MNR'],
+    ['MANORS','MNRS'],['MEADOW','MDW'],['MEADOWS','MDWS'],['MEWS','MEWS'],['MILL','ML'],['MILLS','MLS'],['MISSION','MSN'],
+    ['MOTORWAY','MTWY'],['MOUNT','MT'],['MOUNTAIN','MTN'],['MOUNTAINS','MTNS'],['NECK','NCK'],['ORCHARD','ORCH'],['OVAL','OVAL'],
+    ['OVERPASS','OPAS'],['PARK','PARK'],['PARKS','PARK'],['PARKWAY','PKWY'],['PARKWAYS','PKWY'],['PASS','PASS'],['PASSAGE','PSGE'],
+    ['PATH','PATH'],['PIKE','PIKE'],['PINE','PNE'],['PINES','PNES'],['PLACE','PL'],['PLAIN','PLN'],['PLAINS','PLNS'],['PLAZA','PLZ'],
+    ['POINT','PT'],['POINTS','PTS'],['PORT','PRT'],['PORTS','PRTS'],['PRAIRIE','PR'],['RADIAL','RADL'],['RAMP','RAMP'],['RANCH','RNCH'],
+    ['RAPID','RPD'],['RAPIDS','RPDS'],['REST','RST'],['RIDGE','RDG'],['RIDGES','RDGS'],['RIVER','RIV'],['ROAD','RD'],['ROADS','RDS'],
+    ['ROUTE','RTE'],['ROW','ROW'],['RUE','RUE'],['RUN','RUN'],['SHOAL','SHL'],['SHOALS','SHLS'],['SHORE','SHR'],['SHORES','SHRS'],
+    ['SKYWAY','SKWY'],['SPRING','SPG'],['SPRINGS','SPGS'],['SPUR','SPUR'],['SPURS','SPUR'],['SQUARE','SQ'],['SQUARES','SQS'],
+    ['STATION','STA'],['STRAVENUE','STRA'],['STREAM','STRM'],['STREET','ST'],['STREETS','STS'],['SUMMIT','SMT'],['TERRACE','TER'],
+    ['THROUGHWAY','TRWY'],['TRACE','TRCE'],['TRACK','TRAK'],['TRAFFICWAY','TRFY'],['TRAIL','TRL'],['TUNNEL','TUNL'],['TURNPIKE','TPKE'],
+    ['UNDERPASS','UPAS'],['UNION','UN'],['UNIONS','UNS'],['VALLEY','VLY'],['VALLEYS','VLYS'],['VIADUCT','VIA'],['VIEW','VW'],
+    ['VIEWS','VWS'],['VILLAGE','VLG'],['VILLAGES','VLGS'],['VILLE','VL'],['VISTA','VIS'],['WALK','WALK'],['WALKS','WALK'],['WALL','WALL'],
+    ['WAY','WAY'],['WAYS','WAYS'],['WELL','WL'],['WELLS','WLS']];
+
+  Formatter.directionArray = [['NORTH','N'],['NORTH EAST','NE'],['EAST','E'],['SOUTH EAST','SE'],['SOUTH','S'],['SOUTH WEST','SW'],
+    ['WEST','W'],['NORTH WEST','NW']];
+
+	Formatter.toStartCase = function(str) {
+		str = str.toLowerCase().replace(/(\b\w)/g, function(match) { return match.toUpperCase(); });
+		str.replace(/[\u00DF-\u00FF][A-Z\u00C0-\u00DE]/g, function(match) { return match.toLowerCase(); });
+		return str;
+	}
+
+  Formatter.expand = function(str, type) {
+    type = type.toUpperCase();
+    res = '';
+
+    switch (type) {
+      case 'C':
+      case 'CITY': {
+        res = Formatter.expandCity(str);
+        break;
+      }
+      case 'D':
+      case 'DIR': 
+      case 'DIRECTION': {
+        break;
+      }
+      case 'STATE': {
+        res = Formatter.expandState(str);
+        break;
+      }
+      case 'STREET': 
+      case 'SUFFIX': {
+        res = Formatter.expandStreet(str);
+        break;
+      }
+      case 'UNIT': {
+        res = Formatter.expandUnit(str);
+        break;
+      }
+    }
+
+    return res;
+  }
+
+  Formatter.expandCity = function(str) {
+    var words = str.split(/\s+/);
+    words.push(Formatter.expandStreet(words.pop()));
+    return Formatter.toStartCase(words.join(' '));
+  }
+
+  Formatter.expandDirection = function(str) {
+    str = str.toUpperCase();
+    Formatter.loadDirectionNames();
+    return Formatter.toStartCase(Formatter.directionNames[str] || str);
+  }
+
+  Formatter.loadDirectionNames = function() {
+    if ("undefined" == typeof Formatter.directionNames) {
+      Formatter.directionNames = {};
+      for (var i = 0; i < Formatter.directionArray.length; ++i)
+        Formatter.directionNames[Formatter.directionArray[i][1]] = Formatter.directionArray[i][0];
+    }    
+  }
+
+  Formatter.expandState = function(str) {
+    str = str.toUpperCase();
+    Formatter.loadStateNames();
+    return Formatter.toStartCase(Formatter.stateNames[str] || str);
+  }
+
+  Formatter.loadStateNames = function() {
+    if ("undefined" == typeof Formatter.stateNames) {
+      Formatter.stateNames = {};
+      for (var i = 0; i < Formatter.stateArray.length; ++i)
+        Formatter.stateNames[Formatter.stateArray[i][1]] = Formatter.stateArray[i][0];
+    }
+  }
+
+  Formatter.expandStreet = function(str) {
+    str = str.toUpperCase();
+    Formatter.loadStreetNames();
+    return Formatter.toStartCase(Formatter.streetNames[str] || str);
+  }
+
+  Formatter.loadStreetNames = function() {
+    if ("undefined" == typeof Formatter.streetNames) {
+      Formatter.streetNames = {};
+      for (var i = 0; i < Formatter.streetArray.length; ++i)
+        Formatter.streetNames[Formatter.streetArray[i][1]] = Formatter.streetArray[i][0];
+    }
+  }
+
+  Formatter.expandUnit = function(str) {
+    str = str.toUpperCase();
+    Formatter.loadUnitNames();
+    return Formatter.toStartCase(Formatter.unitNames[str] || str);
+  }
+
+  Formatter.loadUnitNames = function() {
+    if ("undefined" == typeof Formatter.unitNames) {
+      Formatter.unitNames = {};
+      for (var i = 0; i < Formatter.unitArray.length; ++i)
+        Formatter.unitNames[Formatter.unitArray[i][1]] = Formatter.unitArray[i][0];
+    }
+  }
+
+  Formatter.expandAddresses = function(addresses) {
+    debugger;
+  	for (var i = 0; i < addresses.length; ++i) {
+  		if ("undefined" == typeof addresses[i].components) break;
+
+  		if ("undefined" != typeof addresses[i].components.city_name)
+  			addresses[i].components.city_name = Formatter.expandCity(addresses[i].components.city_name);
+
+  		if ("undefined" != typeof addresses[i].components.secondary_designator)
+  			addresses[i].components.secondary_designator = Formatter.expandUnit(addresses[i].components.secondary_designator);
+
+  		if ("undefined" != typeof addresses[i].components.state_abbreviation)
+  			addresses[i].components.state_abbreviation = Formatter.expandState(addresses[i].components.state_abbreviation);
+
+  		if ("undefined" != typeof addresses[i].components.street_suffix)
+  			addresses[i].components.street_suffix = Formatter.expandStreet(addresses[i].components.street_suffix);
+
+      if ("undefined" != typeof addresses[i].components.street_predirection)
+        addresses[i].components.street_predirection = Formatter.expandDirection(addresses[i].components.street_predirection);
+
+      if ("undefined" != typeof addresses[i].components.street_postdirection)
+        addresses[i].components.street_postdirection = Formatter.expandDirection(addresses[i].components.street_postdirection);
+
+      if ("undefined" != typeof addresses[i].components.secondary_number)
+        addresses[i].components.secondary_number = addresses[i].components.secondary_number.toUpperCase();
+
+      // Assemble address line 1
+      var keys = ['primary_number', 'street_predirection', 'street_name', 'street_postdirection', 'street_suffix'];
+      var values = [];
+      for (var j = 0; j < keys.length; ++j)
+        if ("undefined" !== typeof addresses[i].components[keys[j]]) values.push(addresses[i].components[keys[j]]);
+
+      addresses[i].delivery_line_1 = values.join(' ');
+
+      // Assemble address line 2
+      var keys = ['secondary_designator', 'secondary_number', 'extra_secondary_designator', 'extra_secondary_number', 'pmb_designator', 'pmb_number'];
+      var values = [];
+      for (var j = 0; j < keys.length; ++j)
+        if ("undefined" !== typeof addresses[i].components[keys[j]]) values.push(addresses[i].components[keys[j]]);
+
+      if (values.length)
+        addresses[i].delivery_line_2 = values.join(' ');
+  	}
+
+  	return addresses;
+  }
 
 	/*
 	  *	PRIVATE FUNCTIONS / OBJECTS
@@ -877,10 +1079,10 @@
 						suggContainer.append(link);
 					}
 
-					suggContainer.css({
-						"width": Math.max(streetField.outerWidth(), 250) + "px"
-					});
-
+          suggContainer.css({
+            "width": Math.max(streetField.outerWidth(), 250) + "px"
+          });
+          
 					containerUi.show();
 
 					// Delete all older callbacks so they don't get executed later because of latency
@@ -1843,6 +2045,10 @@
 			})
 			.done(function(response, statusText, xhr)
 			{
+				// ADDED BY BRANDON CARL
+				if (config.verbose)
+					var response = Formatter.expandAddresses(response);
+          
 				trigger("ResponseReceived", { address: self, response: new Response(response), invoke: invoke, invokeFn: invokeFn });
 			})
 			.fail(function(xhr, statusText)
